@@ -108,8 +108,8 @@ class NeuralNetwork:
             Z_curr: ArrayLike -- This is what goes into the activation function (io)
                 Current layer linear transformed matrix.
         """
-        W_curr = np.transpose(W_curr)
-        b_curr = np.transpose(b_curr)
+        #W_curr = np.transpose(W_curr)
+        #b_curr = np.transpose(b_curr)
         Z_curr = np.dot(A_prev, W_curr)
         Z_curr = np.add(Z_curr, b_curr)
         if activation == 'sigmoid':
