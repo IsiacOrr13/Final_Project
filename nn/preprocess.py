@@ -1,7 +1,9 @@
 # Imports
 import numpy as np
 from typing import List, Tuple
-from numpy.typing import ArrayLike
+from numpy._typing import ArrayLike
+from numpy import random
+from datetime import datetime
 
 def sample_seqs(seqs: List[str], labels: List[bool]) -> Tuple[List[str], List[bool]]:
     """
@@ -20,7 +22,14 @@ def sample_seqs(seqs: List[str], labels: List[bool]) -> Tuple[List[str], List[bo
         sampled_labels: List[bool]
             List of labels for the sampled sequences
     """
-    pass
+    sampled_seqs = []
+    sampled_labels = []
+    for idx, i in enumerate(range(len(seqs))):
+        random.seed()
+        rand = random.randint(0,len(seqs))
+        sampled_seqs.append(seqs[rand])
+        sampled_labels.append(labels[rand])
+    return sampled_seqs, sampled_labels
 
 def one_hot_encode_seqs(seq_arr: List[str]) -> ArrayLike:
     """
@@ -41,4 +50,19 @@ def one_hot_encode_seqs(seq_arr: List[str]) -> ArrayLike:
                 G -> [0, 0, 0, 1]
             Then, AGA -> [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0].
     """
-    pass
+    map = {'A': [1, 0, 0, 0], 'T': [0, 1, 0, 0], 'C': [0, 0, 1, 0],
+           'G': [0, 0, 0, 1], 'Other': [0, 0, 0, 0]}
+    encoded_lst = [] = []
+    for s in seq_arr:
+        for base in s:
+            if base in map.keys():
+                for i in map[base]:
+                    encoded_lst.append(i)
+            else:
+                for i in map['Other']:
+                    encoded_lst.append(i)
+    return encoded_lst
+
+seq = 'ATCGF'
+x = one_hot_encode_seqs(seq)
+print(x)
