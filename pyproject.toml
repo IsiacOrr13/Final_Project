@@ -16,6 +16,7 @@ dependencies = [
     "pytest",
     "numpy",
     "pandas",
+    "numpy._typing",
     "matplotlib",
     "scikit-learn",
     "typing"

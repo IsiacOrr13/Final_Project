@@ -312,7 +312,6 @@ class NeuralNetwork:
                 Prediction from the model.
         """
         y_hat, cache = self.forward(X)
-        #y_hat = np.transpose([np.sum(y_hat, 1)])
         return y_hat
 
     def _sigmoid(self, Z: ArrayLike) -> ArrayLike:

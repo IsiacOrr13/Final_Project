@@ -3,7 +3,6 @@ import numpy as np
 from typing import List, Tuple
 from numpy._typing import ArrayLike
 from numpy import random
-from datetime import datetime
 
 def sample_seqs(seqs: List[str], labels: List[bool]) -> Tuple[List[str], List[bool]]:
     """
