@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib as plt
 from typing import Tuple, List, Dict, Union
-from numpy._typing import ArrayLike
+from numpy.typing import ArrayLike
 
 
 class NeuralNetwork:
