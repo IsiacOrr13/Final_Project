@@ -4,16 +4,21 @@ from typing import List, Tuple
 from numpy.typing import ArrayLike
 from numpy import random
 
-def sample_seqs(seqs: List[str], labels: List[bool]) -> Tuple[List[str], List[bool]]:
+def sample_seqs(seqs_pos: List[str],seqs_neg: List[str],
+                labels_pos: List[bool], labels_neg: List[bool]) -> Tuple[List[str], List[bool]]:
     """
     This function should sample the given sequences to account for class imbalance. 
     Consider this a sampling scheme with replacement.
     
     Args:
-        seqs: List[str]
-            List of all sequences.
-        labels: List[bool]
-            List of positive/negative labels
+        seqs_pos: List[str]
+            List of all positive sequences.
+        seqs_neg: List[str]
+            List of all negative sequences.
+        labels_pos: List[bool]
+            List of positive labels
+        labels_neg: List[bool]
+            List of negative labels
 
     Returns:
         sampled_seqs: List[str]
@@ -23,12 +28,22 @@ def sample_seqs(seqs: List[str], labels: List[bool]) -> Tuple[List[str], List[bo
     """
     sampled_seqs = []
     sampled_labels = []
-    for idx, i in enumerate(range(len(seqs))):
+    #seq_len_total = int(len(seqs_pos + seqs_neg)/10000)
+    seq_len_total = 10000
+    for i in range(seq_len_total):
         random.seed()
-        rand = random.randint(0,len(seqs))
-        sampled_seqs.append(seqs[rand])
-        sampled_labels.append(labels[rand])
-    return sampled_seqs, sampled_labels
+        rand = random.randint(0,2)
+        if rand == 1:
+            random.seed()
+            rand_2 = random.randint(0, len(seqs_pos))
+            sampled_seqs.append(seqs_pos[rand_2])
+            sampled_labels.append([labels_pos[rand_2]])
+        if rand == 0:
+            random.seed()
+            rand_2 = random.randint(0, len(seqs_neg))
+            sampled_seqs.append(seqs_neg[rand_2])
+            sampled_labels.append([labels_neg[rand_2]])
+    return np.array(sampled_seqs), np.array(sampled_labels)
 
 def one_hot_encode_seqs(seq_arr: List[str]) -> ArrayLike:
     """
@@ -49,15 +64,20 @@ def one_hot_encode_seqs(seq_arr: List[str]) -> ArrayLike:
                 G -> [0, 0, 0, 1]
             Then, AGA -> [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0].
     """
+
     map = {'A': [1, 0, 0, 0], 'T': [0, 1, 0, 0], 'C': [0, 0, 1, 0],
            'G': [0, 0, 0, 1], 'Other': [0, 0, 0, 0]}
-    encoded_lst = [] = []
+    encoded_lst = []
     for s in seq_arr:
+        encode = []
         for base in s:
             if base in map.keys():
                 for i in map[base]:
-                    encoded_lst.append(i)
+                    encode.append(i)
             else:
                 for i in map['Other']:
-                    encoded_lst.append(i)
-    return encoded_lst
+                    encode.append(i)
+        encoded_lst.append(encode)
+    return np.array(encoded_lst)
+
+
