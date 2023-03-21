@@ -26,9 +26,11 @@ def sample_seqs(seqs_pos: List[str],seqs_neg: List[str],
         sampled_labels: List[bool]
             List of labels for the sampled sequences
     """
+    # Rand decides if the next seq in the sample is positive or negative for TF
+    # Rand2 picks a random positive or negative seq (depending on Rand) to add to the sample
+
     sampled_seqs = []
     sampled_labels = []
-    #seq_len_total = int(len(seqs_pos + seqs_neg)/10000)
     seq_len_total = 10000
     for i in range(seq_len_total):
         random.seed()
