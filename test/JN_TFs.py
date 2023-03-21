@@ -4,9 +4,9 @@ from nn import io
 from sklearn.model_selection import train_test_split
 import numpy as np
 
-pos_X = io.read_text_file('../data/rap1-lieb-positives.txt') #17bp
+pos_X = io.read_text_file('./data/rap1-lieb-positives.txt') #17bp
 pos_y = [1] * len(pos_X)
-neg_X_raw = io.read_fasta_file('../data/yeast-upstream-1k-negative.fa') #1000bp
+neg_X_raw = io.read_fasta_file('./data/yeast-upstream-1k-negative.fa') #1000bp
 
 neg_X = []
 for seq in neg_X_raw:
